@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DOC_TITLE}}</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 0 60px;
+    font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Segoe UI", sans-serif;
+    background: #f6f8fb; color: #111827;
+    font-size: 14px; line-height: 1.7;
+  }
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 0 28px; }
+  header { background: #1f2937; color: #fff; padding: 34px 28px 30px; margin-bottom: 26px; }
+  header .wrap { padding: 0; }
+  h1 { margin: 0 0 8px; font-size: 26px; letter-spacing: .3px; }
+  .sub { color: #9ca3af; font-size: 13px; }
+  h2 { font-size: 19px; margin: 34px 0 14px; padding-left: 11px; border-left: 4px solid #1f2937; line-height: 1.3; }
+  h3 { font-size: 15px; margin: 22px 0 10px; color: #374151; }
+  .card { background: #fff; border: 1px solid #e8ebf0; border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; }
+  .kpis { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 6px; }
+  .kpi { flex: 1 1 150px; background: #fff; border: 1px solid #e8ebf0; border-radius: 10px; padding: 14px 16px; }
+  .kpi .n { font-size: 25px; font-weight: 700; line-height: 1.2; }
+  .kpi .l { font-size: 12px; color: #6b7280; margin-top: 4px; }
+  .n-red { color: #dc2626; } .n-green { color: #065f46; }
+  .n-purple { color: #5b21b6; } .n-blue { color: #2563eb; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; background: #fff; }
+  th, td { border-bottom: 1px solid #eef0f4; padding: 8px 10px; text-align: left; vertical-align: middle; }
+  th { background: #1f2937; color: #fff; font-weight: 600; white-space: nowrap; }
+  tbody tr:nth-child(even) { background: #fafbfd; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tbl-wrap { overflow-x: auto; border: 1px solid #e8ebf0; border-radius: 10px; }
+  .badge { display: inline-block; padding: 1px 9px; border-radius: 11px; font-size: 12px; line-height: 1.6; white-space: nowrap; }
+  .bg-green { background: #d1fae5; color: #065f46; }
+  .bg-red { background: #fee2e2; color: #dc2626; }
+  .bg-purple { background: #ede9fe; color: #5b21b6; }
+  .bg-gray { background: #f3f4f6; color: #6b7280; }
+  .red { color: #dc2626; font-weight: 600; }
+  .prime { color: #5b21b6; font-weight: 600; white-space: nowrap; }
+  .muted { color: #9ca3af; }
+  .stars { color: #f59e0b; white-space: nowrap; }
+  ul { margin: 8px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+  code { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 4px; padding: 1px 5px; font-family: Consolas, "Courier New", monospace; font-size: 12.5px; }
+  .note { font-size: 12.5px; color: #6b7280; margin-top: 8px; }
+  .warn { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #92400e; margin: 12px 0; }
+  footer { margin-top: 34px; padding-top: 16px; border-top: 1px solid #e8ebf0; font-size: 12px; color: #9ca3af; }
+  @media print {
+    body { background: #fff; font-size: 12px; }
+    header { background: #fff; color: #111827; border-bottom: 2px solid #1f2937; padding: 0 0 14px; }
+    header .sub { color: #6b7280; }
+    h2 { page-break-after: avoid; }
+    .tbl-wrap { overflow: visible; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>{{H1}}</h1>
+    <div class="sub">{{HEADER_META}}</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <h2>一、监控数据（{{SNAPSHOT}}）</h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ASIN</th><th>产品</th><th>可售状态</th><th>Buy Box</th><th>价格 ({{CURRENCY}})</th><th>Coupon</th><th>Prime 专享</th>
+          <th>Rating</th><th>Review</th><th>大类排名</th><th>小类排名</th><th>FBA 库存预警</th>
+        </tr>
+      </thead>
+      <tbody>
+{{DATA_TABLE_ROWS}}
+      </tbody>
+    </table>
+  </div>
+  <p class="note">{{DATA_NOTE}}</p>
+
+  <h2>二、日报总结</h2>
+  <div class="kpis">
+{{SUMMARY_CARDS}}
+  </div>
+{{SUMMARY_BLOCKS}}
+
+  <h2>三、口径与判定规则</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:130px">列</th><th style="width:240px">数据来源</th><th>口径与判定规则</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ASIN</strong></td>
+          <td>监控清单（config.json 的 <code>asinList</code>）</td>
+          <td>行序固定为清单顺序，不随数据源返回顺序变化。当前监控 <strong>{{ASIN_COUNT}} 个</strong>。新增 / 移除只改 config.json，不动代码。</td>
+        </tr>
+        <tr>
+          <td><strong>产品</strong></td>
+          <td>运营命名（config.json）</td>
+          <td>中文简称由运营定稿，用于内部识别；与平台原标题不同（原标题过长，不适合进表格）。</td>
+        </tr>
+        <tr>
+          <td><strong>可售状态</strong></td>
+          <td>卖家精灵 <code>getAsinDetail</code></td>
+          <td>接口有正常返回 → <span class="badge bg-green">可售</span>；接口无数据 → <span class="badge bg-red">不可售</span>（此时价格、评分等显示为 <code>-</code>）。</td>
+        </tr>
+        <tr>
+          <td><strong>Buy Box</strong></td>
+          <td>卖家精灵 <code>sellerId</code> + <code>fulfillment</code></td>
+          <td>卖家 ID 属于品牌方（<code>{{BRAND_SELLER_IDS}}</code>）<strong>且</strong>配送方式为 <code>FBA</code> → <span class="badge bg-green">是</span>；否则红字「异常」。<br>异常分两种：① 平台自营抢走（卖家显示 Amazon、配送 AMZ）——需运营干预；② 纯数据缺失（卖家字段为空）——通常为抓取漏项。</td>
+        </tr>
+        <tr>
+          <td><strong>价格 ({{CURRENCY}})</strong></td>
+          <td>卖家精灵 <code>getAsinDetail.price</code></td>
+          <td>为<strong>到手价</strong>（含促销后的实际售价），不是 ERP 标价。与上一交易日基线比较，不一致 → 红字「异常」。<br><span class="muted">注：ERP 的商品标价普遍高于到手价，两者口径不同，不可混用（混用会让整列误报）。</span></td>
+        </tr>
+        <tr>
+          <td><strong>Coupon</strong></td>
+          <td>卖家精灵 <code>coupon</code>，为空时由<strong>积加 ERP 广告券报表</strong>兜底</td>
+          <td>今日有券 → 紫色徽章显示券值（金额 <code>$2 coupon</code> / 百分比 <code>5% coupon</code>）；<br>今日无券、昨日有券 → 红色「coupon 消失」；两日均无 → 灰字「无」。<br><span class="muted">取值优先级：卖家精灵有值以它为准 → 为空时用 ERP 在跑的券补填 → 两者都无才判「无」。该字段在卖家精灵侧会成批漏抓，直接采信会造成「券消失」误报。</span></td>
+        </tr>
+        <tr>
+          <td><strong>Prime 专享</strong></td>
+          <td>{{PRIME_SOURCE}}，卖家精灵 <code>primePrice</code> 作兜底</td>
+          <td>当前有 Prime 专享折扣 → 紫字 <code>Prime$29.99</code>（显示折扣价）；未做折扣 → 单元格留空。<br><span class="muted">该字段在卖家精灵侧同样会成批漏抓（同批数据几分钟内从有值变全 -1），因此以实时抓取为准。</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rating</strong></td>
+          <td>卖家精灵 <code>getAsinDetail.ratings</code></td>
+          <td>该 ASIN 的<strong>累计评论数</strong>，绿色徽章 <code>+N</code> 为与上一交易日的增量。变体家族共享评论池，同父体商品的 Rating 数值会一致。</td>
+        </tr>
+        <tr>
+          <td><strong>Review</strong></td>
+          <td>卖家精灵 <code>getAsinDetail.rating</code></td>
+          <td>亚马逊星级评分（0–5，如 ★4.6），不是评论数。</td>
+        </tr>
+        <tr>
+          <td><strong>大类排名</strong></td>
+          <td>卖家精灵 <code>bsrRank</code></td>
+          <td>一级类目畅销排名（<code>{{GROSS_LABEL}}</code>）。数字越小越好。<br>与上次监控相比<strong>波动 ≥ {{THRESHOLD_GROSS}} 名</strong> → 红字「异常」。</td>
+        </tr>
+        <tr>
+          <td><strong>小类排名</strong></td>
+          <td>卖家精灵 <code>subcategories[0].rank</code></td>
+          <td>末级细分类目畅销排名（<code>{{SUB_LABEL}}</code>）。<br>与上次监控相比<strong>波动 ≥ {{THRESHOLD_SUB}} 名</strong> → 红字「异常」。<br><span class="muted">个别 ASIN 挂多个小类，固定取第一个（主类目）；类目名与基线不一致时自动不环比并告警（平台调整类目时数字不可比）。</span></td>
+        </tr>
+        <tr>
+          <td><strong>FBA 库存预警</strong></td>
+          <td>积加 ERP <code>post_purchase_store_fbaInventory_page_V2</code></td>
+          <td>可售天数 = <strong>平台仓可用量</strong> ÷ <strong>30 天日均销量</strong>，仓库口径 <code>{{WAREHOUSE}}</code>。<br>&lt; {{THRESHOLD_FBA}} 天 → 红字「异常 · N天」；≥ {{THRESHOLD_FBA}} 天 → 绿字「正常 · N天」；无数据 → 「—」。<br><span class="muted">同一 ASIN 存在多条 MSKU 时，取有库存的那条（可用量最大者）。不用商品列表的「可履约数量」——口径更小会低估。</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>{{FOOTER_META}}</footer>
+
+</div>
+</body>
+</html>

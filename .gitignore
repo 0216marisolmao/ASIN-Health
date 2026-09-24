@@ -1,0 +1,32 @@
+# ===== 真实经营数据（绝不入库）=====
+data/
+outputs/
+config/config.json
+config.json
+*.xlsx
+monitor_data.json
+*_baseline.json
+erp_stock.json
+coupons.json
+coupons_erp.json
+prime_frontend.json
+
+# ===== 运行产物 =====
+*.png
+*.zip
+*.html.bak
+report_doc.png
+_view.html
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ===== 编辑器 / 系统 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
